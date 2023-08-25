@@ -22,24 +22,16 @@ void find_second_smallest_largest(int arr[], int n, int *second_smallest, int *s
 }
 
 int main() {
-    char filename[100];
-    printf("Enter the filename containing integers: ");
-    scanf("%s", filename);
-
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("File not found.\n");
-        return 1;
-    }
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
 
     int integers[1000]; // Assuming an array of maximum 1000 integers
-    int n = 0; // Number of integers read from the file
 
-    while (fscanf(file, "%d", &integers[n]) != EOF) {
-        n++;
+    printf("Enter the elements:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &integers[i]);
     }
-
-    fclose(file);
 
     int second_smallest, second_largest;
     find_second_smallest_largest(integers, n, &second_smallest, &second_largest);

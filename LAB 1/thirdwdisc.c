@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 
 void findDuplicates(int arr[], int n) {
@@ -33,22 +32,10 @@ int main() {
     scanf("%d", &n);
 
     int arr[n];
-
-    // Read integers from the disk file into the array
-    FILE *file = fopen("third.txt", "r");
-    if (file == NULL) {
-        printf("Error opening the file.\n");
-        return 1;
-    }
-
-    printf("Content of the file (third.txt):\n");
+    printf("Enter the elements:\n");
     for (int i = 0; i < n; i++) {
-        fscanf(file, "%d", &arr[i]);
-        printf("%d ", arr[i]);
+        scanf("%d", &arr[i]);
     }
-    printf("\n");
-
-    fclose(file);
 
     findDuplicates(arr, n);
 
