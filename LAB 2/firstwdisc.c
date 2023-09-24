@@ -11,13 +11,13 @@ void decimalToBinaryRecursion(int num, int bits) {
 int main() {
     int num;
 
-    printf("Enter decimal numbers (Ctrl+Z or Ctrl+D to exit):\n");
+    printf("Enter decimal numbers 5:\n");
     while (scanf("%d", &num) != EOF) {
         printf("The binary equivalent of %d is ", num);
         decimalToBinaryRecursion(num, 16);
         printf("\n");
     }
 
-    printf("Conversion completed.\n");
+    
     return 0;
 }
