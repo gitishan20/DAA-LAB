@@ -1,177 +1,156 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-// Function to merge two subarrays
-void merge(int arr[], int left, int mid, int right, long long int *comparisonCount) {
-    int i, j, k;
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
+int count = 0;
 
-    // Create temporary arrays
-    int L[n1], R[n2];
-
-    // Copy data to temp arrays L[] and R[]
-    for (i = 0; i < n1; i++) {
-        L[i] = arr[left + i];
-    }
-    for (j = 0; j < n2; j++) {
-        R[j] = arr[mid + 1 + j];
-    }
-
-    // Merge the temp arrays back into arr[left..right]
-    i = 0; // Initial index of first subarray
-    j = 0; // Initial index of second subarray
-    k = left; // Initial index of merged subarray
-
-    while (i < n1 && j < n2) {
-        (*comparisonCount)++;
-        if (L[i] <= R[j]) {
-            arr[k++] = L[i++];6566546
-        } else {
-            arr[k++] = R[j++];
+void merge(int arr[], int l, int m, int r)
+{
+    int temp[r - l + 1];
+    int i = l, j = m + 1, k = 0;
+    while (i <= m && j <= r)
+    {
+        if (arr[i] < arr[j])
+        {
+            temp[k] = arr[i];
+            i++;
         }
+        else
+        {
+            temp[k] = arr[j];
+            j++;
+        }
+        k++;
+        count++;
+    }
+    while (i <= m)
+    {
+        temp[k] = arr[i];
+        i++;
+        k++;
+    }
+    while (j <= r)
+    {
+        temp[k] = arr[j];
+        j++;
+        k++;
     }
 
-    // Copy the remaining elements of L[], if there are any
-    while (i < n1) {
-        arr[k++] = L[i++];
-    }
-
-    // Copy the remaining elements of R[], if there are any
-    while (j < n2) {
-        arr[k++] = R[j++];
-    }
-}
-
-// Merge Sort function
-void mergeSort(int arr[], int left, int right, long long int *comparisonCount) {
-    if (left < right) {
-        // Same as (left+right)/2, but avoids overflow for large left and right
-        int mid = left + (right - left) / 2;
-
-        // Recursively sort both halves
-        mergeSort(arr, left, mid, comparisonCount);
-        mergeSort(arr, mid + 1, right, comparisonCount);
-
-        // Merge the sorted halves
-        merge(arr, left, mid, right, comparisonCount);
-    }
-}
-
-// Function to generate random data
-void generateRandomData(int arr[], int n) {
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 1000; // Generating random numbers between 0 and 999
+    for(int i = l; i <= r; i++)
+    {
+        arr[i] = temp[i - l];
     }
 }
 
-// Function to display array elements
-void displayArray(int arr[], int n) {
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
+void mergeSort(int arr[], int l, int r)
+{
+    if (l < r)
+    {
+        int m = (l + r) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
     }
-    printf("\n");
 }
 
-int main() {
-    int choice, n;
-    long long int comparisonCount;
-
+int main()
+{
     printf("MAIN MENU (MERGE SORT)\n");
     printf("1. Ascending Data\n");
     printf("2. Descending Data\n");
     printf("3. Random Data\n");
-    printf("4. Exit\n");
+    printf("4. ERROR (EXIT)\n");
+    int choice;
 
     printf("Enter your choice: ");
     scanf("%d", &choice);
-
-    if (choice == 4) {
-        printf("Exiting the program.\n");
-        return 0;
+    switch (choice)
+    {
+    case 1:
+    {
+        FILE *fp1, *fp2;
+        fp1 = fopen("inAsce.dat", "r");
+        fp2 = fopen("outMergeAsce.dat", "w");
+        int n = 300;
+        int arr[n];
+        for (int i = 0; i < n; i++)
+        {
+            fscanf(fp1, "%d, ", &arr[i]);
+        }
+        clock_t start, end;
+        start = clock();
+        mergeSort(arr, 0, n - 1);
+        end = clock();
+        double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+        for (int i = 0; i < n; i++)
+        {
+            fprintf(fp2, "%d ", arr[i]);
+        }
+        printf("Time taken to sort the array is %f seconds\n", time_taken);
+        printf("Number of comparisons: %d\n", count);
+        fclose(fp1);
+        fclose(fp2);
+        break;
     }
 
-    printf("Enter the number of elements (between 300 and 500): ");
-    scanf("%d", &n);
-
-    if (n < 300 || n > 500) {
-        printf("Invalid input! Number of elements must be between 300 and 500.\n");
-        return 1;
+    case 2:
+    {
+        FILE *fp1, *fp2;
+        fp1 = fopen("inDesc.dat", "r");
+        fp2 = fopen("outMergeDesc.dat", "w");
+        int n = 300;
+        int arr[n];
+        for (int i = 0; i < n; i++)
+        {
+            fscanf(fp1, "%d, ", &arr[i]);
+        }
+        clock_t start, end;
+        start = clock();
+        mergeSort(arr, 0, n - 1);
+        end = clock();
+        double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+        for (int i = 0; i < n; i++)
+        {
+            fprintf(fp2, "%d ", arr[i]);
+        }
+        printf("Time taken to sort the array is %f seconds\n", time_taken);
+        printf("Number of comparisons: %d\n", count);
+        fclose(fp1);
+        fclose(fp2);
+        break;
     }
 
-    int arr[n];
-
-    // Read data from the appropriate file or generate random data
-    switch (choice) {
-        case 1: // Ascending Data
-            for (int i = 0; i < n; i++) {
-                arr[i] = i + 10; // Generate ascending data
-            }
-            break;
-
-        case 2: // Descending Data
-            for (int i = 0; i < n; i++) {
-                arr[i] = 90 - i; // Generate descending data
-            }
-            break;
-
-        case 3: // Random Data
-            srand(time(NULL)); // Seed for random number generation
-            generateRandomData(arr, n);
-            break;
-
-        default:
-            printf("Invalid choice!\n");
-            return 1;
+    case 3:
+    {
+        FILE *fp1, *fp2;
+        fp1 = fopen("inRand.dat", "r");
+        fp2 = fopen("outMergeRand.dat", "w");
+        int n = 300;
+        int arr[n];
+        for (int i = 0; i < n; i++)
+        {
+            fscanf(fp1, "%d, ", &arr[i]);
+        }
+        clock_t start, end;
+        start = clock();
+        mergeSort(arr, 0, n - 1);
+        end = clock();
+        double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+        for (int i = 0; i < n; i++)
+        {
+            fprintf(fp2, "%d ", arr[i]);
+        }
+        printf("Time taken to sort the array is %f seconds\n", time_taken);
+        printf("Number of comparisons: %d\n", count);
+        fclose(fp1);
+        fclose(fp2);
+        break;
+    }
+    case 4:
+    {
+        printf("Ending...\n");
+        exit(0);
     }
 
-    // Display original data (optional)
-    printf("Original Data: ");
-    displayArray(arr, n);
-
-    // Merge Sort and measure execution time
-    clock_t start_time = clock();
-    comparisonCount = 0; // Initialize comparison count
-    mergeSort(arr, 0, n - 1, &comparisonCount);
-    clock_t end_time = clock();
-
-    // Calculate execution time in seconds
-    double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-
-    // Display sorted data
-    printf("Sorted Data: ");
-    displayArray(arr, n);
-
-    // Display the number of comparisons and execution time
-    printf("Number of Comparisons: %lld\n", comparisonCount);
-    printf("Execution Time: %f seconds\n", execution_time);
-
-    // Write the sorted data to an output file
-    FILE *outputFile;
-    switch (choice) {
-        case 1:
-            outputFile = fopen("outMergeAsce.dat", "w");
-            break;
-        case 2:
-            outputFile = fopen("outMergeDesc.dat", "w");
-            break;
-        case 3:
-            outputFile = fopen("outMergeRand.dat", "w");
-            break;
     }
-
-    if (outputFile == NULL) {
-        printf("Error opening the output file.\n");
-        return 1;
-    }
-
-    for (int i = 0; i < n; i++) {
-        fprintf(outputFile, "%d ", arr[i]);
-    }
-
-    fclose(outputFile);
-
-    return 0;
 }
