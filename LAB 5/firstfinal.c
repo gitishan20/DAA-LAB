@@ -3,7 +3,7 @@ char line[1000];
 struct person
 {
     int id;
-    char name[20];
+    char name[20]; 
     int age;
     int height;
     int weight;
