@@ -11,6 +11,7 @@ int main()
 {
     FILE *src_file, *dest_file;
     int num;
+    printf("2105884 Gitishan\n");
 
     src_file = fopen("source.txt", "r");
     if(src_file == NULL) {

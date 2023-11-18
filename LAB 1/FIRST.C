@@ -23,6 +23,7 @@ void find_second_smallest_largest(int arr[], int n, int *second_smallest, int *s
 
 int main() {
     char filename[100];
+    printf("2105884 Gitishan\n");
     printf("Enter the filename containing integers: ");
     scanf("%s", filename);
 

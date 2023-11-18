@@ -1,19 +1,31 @@
 #include <stdio.h>
-#include <limits.h>
-
-#define MAX 100
-
-void matrixChainOrder(int p[], int n, int m[][MAX], int s[][MAX]) {
-    int i, j, k, l, q;
-    for (i = 1; i <= n; i++) {
-        m[i][i] = 0;
+void printOptimalParenthesis(int *s, int i, int j, int n) {
+    if (i == j) {
+        printf("A%d", i);
+        return;
     }
-    for (l = 2; l <= n; l++) {
-        for (i = 1; i <= n - l + 1; i++) {
+    printf("(");
+    printOptimalParenthesis(s, i, *((s+i*n) + j), n);
+    printOptimalParenthesis(s, *((s+i*n)+j)+1, j, n);
+    printf(")");
+}
+int MatrixChainOrder(int arr[], int n)
+{
+    int m[n][n];
+    int s[n][n];
+    int i, j, k, l, q;
+    for (i = 1; i < n; i++) {
+        for (j = 1; j < n; j++) {
+            m[i][j] = 0;
+            s[i][j] = 0;
+        }
+    }
+    for (l = 2; l < n; l++) {
+        for (i = 1; i < n - l + 1; i++) {
             j = i + l - 1;
-            m[i][j] = INT_MAX;
+            m[i][j] = 2147483647;
             for (k = i; k <= j - 1; k++) {
-                q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j];
+                q = m[i][k] + m[k + 1][j] + arr[i - 1] * arr[k] * arr[j];
                 if (q < m[i][j]) {
                     m[i][j] = q;
                     s[i][j] = k;
@@ -21,54 +33,40 @@ void matrixChainOrder(int p[], int n, int m[][MAX], int s[][MAX]) {
             }
         }
     }
-}
-
-void printOptimalParenthesis(int s[][MAX], int i, int j) {
-    if (i == j) {
-        printf("A%d", i);
-    } else {
-        printf("(");
-        printOptimalParenthesis(s, i, s[i][j]);
-        printOptimalParenthesis(s, s[i][j] + 1, j);
-        printf(")");
+    printf("\nM Table representation:\n");
+    for (i = 1; i < n; i++) {
+        for (j = 1; j < n; j++) {
+            printf("%d\t", m[i][j]);
+        }
+        printf("\n");
     }
+    printf("\nS table representation:\n");
+    for (i = 1; i < n; i++) {
+        for (j = 1; j < n; j++) {
+            printf("%d\t", s[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\nOptimal Parenthesization: ");
+    printOptimalParenthesis((int*)s, 1, n-1, n);
+    return m[1][n - 1];
 }
-
 int main() {
-    int n, i, j, k, l, q;
-    int p[MAX], m[MAX][MAX] = {0}, s[MAX][MAX] = {0};
-    printf("Enter number of matrices: ");
+    printf ("\nGitishan");
+    printf("\n2105884\n");
+    int n, a, b;
+    printf("Enter number of matrices : ");
     scanf("%d", &n);
-    for (i = 1; i <= n + 1; i++) {
-        printf("Enter row and col size of A%d: ", i);
-        scanf("%d %d", &p[i - 1], &p[i]);
-    }
-    matrixChainOrder(p, n, m, s);
-    printf("M Table:\n");
-    for (i = 1; i <= n; i++) {
-        for (j = 1; j <= n; j++) {
-            if (i <= j) {
-                printf("%d ", m[i][j]);
-            } else {
-                printf("  ");
-            }
+    int arr[n+1];
+    for(int i=0; i<n; i++){
+        printf("Enter row and col size of A%d : ", i+1);
+        scanf("%d %d", &a, &b);
+        if(i!=0 && a != arr[i]){
+            printf("Invalid Sequence\n");
+            return -1;
         }
-        printf("\n");
+        arr[i] = a;
+        arr[i+1] = b;
     }
-    printf("S Table:\n");
-    for (i = 1; i <= n; i++) {
-        for (j = 1; j <= n; j++) {
-            if (i < j) {
-                printf("%d ", s[i][j]);
-            } else {
-                printf("  ");
-            }
-        }
-        printf("\n");
-    }
-    printf("Optimal parenthesization: ");
-    printOptimalParenthesis(s, 1, n);
-    printf("\n");
-    printf("The optimal ordering of the given matrices requires %d scalar multiplications.\n", m[1][n]);
-    return 0;
+    printf("\nThe optimal ordering of the given matrices requires %d scalar multiplications.\n", MatrixChainOrder(arr, n+1));
 }

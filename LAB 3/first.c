@@ -1,4 +1,4 @@
-
+//Write a program to implement Binary Search to give the position of leftmost appearance
 #include <stdio.h>
 
 int binarySearch(int arr[], int low, int high, int key, int *comparisons) {
@@ -24,6 +24,7 @@ int binarySearch(int arr[], int low, int high, int key, int *comparisons) {
 int main() {
   int n, arr[100], key, i, comparisons = 0;
 
+  printf("2105884 Gitishan\n");
   printf("Enter size of array: ");
   scanf("%d", &n);
 

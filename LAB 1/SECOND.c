@@ -11,6 +11,8 @@ void findPrefixSum(int arr[], int n, int prefixSum[]) {
 
 int main() {
     int n;
+    printf("2105884 Gitishan\n");
+
     printf("Enter the number of elements in the array: ");
     scanf("%d", &n);
 

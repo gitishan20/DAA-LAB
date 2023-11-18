@@ -1,3 +1,4 @@
+//Insertion Sort
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -16,6 +17,7 @@ void insertionSort(int a[], int n)
         }
         a[j + 1] = temp;
     }
+    printf("2105884 Gitishan\n");
     printf("Number of comparisons made: %d\n", count);
 }                                   
 

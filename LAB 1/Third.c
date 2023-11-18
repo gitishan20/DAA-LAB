@@ -29,6 +29,7 @@ void findDuplicates(int arr[], int n) {
 
 int main() {
     int n;
+    printf("2105884 Gitishan\n");
     printf("Enter the number of elements in the array: ");
     scanf("%d", &n);
 

@@ -10,6 +10,7 @@ int getGCD(int n1, int n2) {
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
+        printf("2105884 Gitishan\n");
         printf("Usage: ./gcd <source_file> <destination_file>\n");
         return 1;
     }

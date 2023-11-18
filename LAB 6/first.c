@@ -61,9 +61,11 @@ int main()
         scanf("%d %d %d", &arr[i].id, &arr[i].profit, &arr[i].weight);
         arr[i].ratio = (float)arr[i].profit / arr[i].weight;
     }
+   
     heapSort(arr, n);
     int i = 0;
     float profit = 0;
+    
     i=n-1;
     while(capacity > 0 && i > 0)
     {

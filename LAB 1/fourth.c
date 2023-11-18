@@ -15,6 +15,7 @@ void ROTATE_RIGHT(int *p1, int p2) {
 
 int main() {
     int N;
+    printf("2105884 Gitishan\n");
     printf("Enter the size of the array: ");
     scanf("%d", &N);
 
